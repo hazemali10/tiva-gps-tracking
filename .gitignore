@@ -8,7 +8,7 @@ BUILD/
 *.crf
 *.d
 *.o
-.lst
+*.lst
 
 *.axf
 *.dep
