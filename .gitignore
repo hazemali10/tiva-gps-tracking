@@ -1,0 +1,17 @@
+BUILD/
+.vscode/
+
+*.bak
+*.uvgui.*
+*.uvopt
+
+*.crf
+*.d
+*.o
+.lst
+
+*.axf
+*.dep
+*.map
+*.htm
+*.lnp
