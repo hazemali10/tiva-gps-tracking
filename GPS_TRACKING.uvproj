@@ -362,7 +362,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath></IncludePath>
+              <IncludePath>.\INC\HAL;.\INC\MCAL;.\SERVICES</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
