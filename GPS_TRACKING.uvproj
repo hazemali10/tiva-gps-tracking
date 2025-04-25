@@ -416,16 +416,6 @@
           <GroupName>HAL</GroupName>
           <Files>
             <File>
-              <FileName>gps.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\INC\HAL\gps.h</FilePath>
-            </File>
-            <File>
-              <FileName>lcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\INC\HAL\lcd.h</FilePath>
-            </File>
-            <File>
               <FileName>gps.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\SRC\HAL\gps.c</FilePath>
@@ -440,16 +430,6 @@
         <Group>
           <GroupName>MCAL</GroupName>
           <Files>
-            <File>
-              <FileName>gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\INC\MCAL\gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\INC\MCAL\uart.h</FilePath>
-            </File>
             <File>
               <FileName>gpio.c</FileName>
               <FileType>1</FileType>
