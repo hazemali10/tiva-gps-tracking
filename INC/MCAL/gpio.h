@@ -1,9 +1,9 @@
 #ifndef GPIO_H
 #define GPIO_H
 
-#define GPIO_LED_ON     1
+#define GPIO_LED_ON     1  //positive logic
 #define GPIO_LED_OFF    0
-#define GPIO_SW_ON      0
+#define GPIO_SW_ON      0  //negative logic
 #define GPIO_SW_OFF     1
 
 
