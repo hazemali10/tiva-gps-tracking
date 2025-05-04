@@ -2,7 +2,7 @@
 #define UART_H
 
 
-void UART0_Init(void);
+void UART0_init(void);
 
 char UART0_isCharAvailable(void);
 
