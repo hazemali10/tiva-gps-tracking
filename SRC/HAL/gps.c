@@ -1,15 +1,72 @@
 #include "gps.h"
 #include "bit_utils.h"
 #include <math.h>
+#include "uart.h"
+#include <string.h>
 #define PI  3.14159265358979323846
+
+char GPS[80];
+char GPS_LogName[]="$GPRMS,";
+
+
 const double EARTH_RADIUS =6371000;
 
-float ToDegree(float angle){
-int degree = (int) angle /100;
-float minutes = angle -(float) degree*100;
-return (degree + (minutes/60));
+void GPS_read(){    // read output from GPS
+
+    char recievedChar;
+    char flag = 1 ;
+
+    do{
+   
+        flag =1;
+        for (char i=0; i<7 ; i++){
+
+  
+            if( UART0_getChar() != GPS_LogName[i]){
+
+                flag=0;
+                break;
+            }
+        }
+    }
+
+    while (flag==0);   //Making sure that I recieved the correct GPS_LogName
+
+    strcpy(GPS,"");   // Removing any rubbish in array 
+
+    do{
+
+
+        char fillGPScounter=0;
+        recievedChar=UART0_getChar();
+        GPS[fillGPScounter++] = recievedChar;
+    }
+    while(recievedChar!='*');  // output must end before (*)
 }
 
-float ToRad(float angle){
-return angle * PI /180;
+float ToDegree(float angle){     //Converting coordinates to degree
+	int degree = (int) angle /100;
+	float minutes = angle -(float) degree*100;
+	return (degree + (minutes/60));
+}
+
+float ToRad(float angle){      ////Converting degree to radian
+  return angle * PI /180;
+}
+
+float GPS_getDistance (float currentLong , float currentLat , float destLong , float destLat){
+//Get Radian Angle
+float currentLongRad= ToRad(ToDegree(currentLong));
+float currentLatRad= ToRad(ToDegree(currentLat));
+float destLongRad= ToRad(ToDegree(destLong));
+float destLatRad= ToRad(ToDegree(destLat));
+
+//Get Difference
+float LongDiff = destLongRad-currentLongRad;
+float LatDiff = destLatRad-currentLatRad;
+
+//Calculate Distance 
+float a = pow(sin(LatDiff/2),2) + cos(currentLatRad)*cos(destLatRad)* pow(sin(LongDiff/2),2); //Haversine Formula
+double c = 2 * atan2(sqrt(a),sqrt(1-a));
+return EARTH_RADIUS *c;
 }
