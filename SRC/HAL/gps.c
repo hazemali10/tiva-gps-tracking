@@ -11,7 +11,7 @@ char GPS_LogName[]="$GPRMS,";
 
 const double EARTH_RADIUS =6371000;
 
-void GPS_read(){    // read output from GPS
+void GPS_read(){
 
     char recievedChar;
     char flag = 1 ;
@@ -41,25 +41,25 @@ void GPS_read(){    // read output from GPS
         recievedChar=UART0_getChar();
         GPS[fillGPScounter++] = recievedChar;
     }
-    while(recievedChar!='*');  // output must end before (*)
+    while(recievedChar!='*');
 }
 
-float ToDegree(float angle){     //Converting coordinates to degree
-	int degree = (int) angle /100;
-	float minutes = angle -(float) degree*100;
-	return (degree + (minutes/60));
+float toDegree(float angle){     //Converting coordinates to degree
+int degree = (int) angle /100;
+float minutes = angle -(float) degree*100;
+return (degree + (minutes/60));
 }
 
-float ToRad(float angle){      ////Converting degree to radian
-  return angle * PI /180;
+float toRad(float angle){      ////Converting degree to radian
+return angle * PI /180;
 }
 
 float GPS_getDistance (float currentLong , float currentLat , float destLong , float destLat){
 //Get Radian Angle
-float currentLongRad= ToRad(ToDegree(currentLong));
-float currentLatRad= ToRad(ToDegree(currentLat));
-float destLongRad= ToRad(ToDegree(destLong));
-float destLatRad= ToRad(ToDegree(destLat));
+float currentLongRad= toRad(toDegree(currentLong));
+float currentLatRad= toRad(toDegree(currentLat));
+float destLongRad= toRad(toDegree(destLong));
+float destLatRad= toRad(toDegree(destLat));
 
 //Get Difference
 float LongDiff = destLongRad-currentLongRad;
