@@ -15,13 +15,7 @@ typedef enum {
     LED_GREEN = 3
 } GPIO_PIN;
 
-// lcd functions
-void delay(long d);
-void printdata(unsigned char data);
-void lcd_data(unsigned char data);
-void lcd_cmd(unsigned char cmd);
-void lcd_string(unsigned char *str,unsigned char len);
-void lcd_init(void);
+
 
 void GPIO_setLedValue(GPIO_PIN, unsigned char);
 
