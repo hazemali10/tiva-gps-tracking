@@ -9,21 +9,15 @@ int main(void) {
     {
         if (GPIO_getSwitchValue(SW1) == GPIO_SW_ON)
         {
-            GPIO_setLedValue(LED_RED, GPIO_LED_ON);
-            GPIO_setLedValue(LED_BLUE, GPIO_LED_OFF);
-            GPIO_setLedValue(LED_GREEN, GPIO_LED_OFF);
+           GPIO_PORTF_DATA_R = 0x02;
         } 
         else if (GPIO_getSwitchValue(SW2) == GPIO_SW_ON)
         {
-            GPIO_setLedValue(LED_RED, GPIO_LED_OFF);
-            GPIO_setLedValue(LED_BLUE, GPIO_LED_ON);
-            GPIO_setLedValue(LED_GREEN, GPIO_LED_OFF);
+            GPIO_PORTF_DATA_R = 0x04;
         }
         else
         {
-            GPIO_setLedValue(LED_RED, GPIO_LED_OFF);
-            GPIO_setLedValue(LED_BLUE, GPIO_LED_OFF);
-            GPIO_setLedValue(LED_GREEN, GPIO_LED_ON);
+            GPIO_PORTF_DATA_R = 0x08;
         }
     }
     
