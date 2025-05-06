@@ -2,11 +2,11 @@
 #include "tm4c123gh6pm.h"
 
 void delay(long d);
-void printdata(unsigned char data);
-void lcd_data(unsigned char data);
-void lcd_cmd(unsigned char cmd);
-void lcd_string(unsigned char *str,unsigned char len);
-void lcd_init(void);
+void LCD_printData(unsigned char data);
+void LCD_data(unsigned char data);
+void LCD_cmd(unsigned char cmd);
+void LCD_string(unsigned char *str,unsigned char len);
+void LCD_init(void);
 /*
     RS= PD0
     RW= PD1
@@ -25,7 +25,7 @@ void lcd_init(void);
 
 
 
-int main(){
+void LCD_gpioInit(){
     
     SYSCTL_RCGCGPIO_R |= 0x1B;
     while((SYSCTL_PRGPIO_R& 0x01)==0){};
@@ -47,7 +47,7 @@ void delay(long d)
     
 }
 
-void printdata(unsigned char data){
+void LCD_printData(unsigned char data){
     if((data&0x01)==0x01)(GPIO_PORTA_DATA_R |= (1<<7) );
     else (GPIO_PORTA_DATA_R &= (~(1<<7)))
 
@@ -73,7 +73,7 @@ void printdata(unsigned char data){
     else (GPIO_PORTB_DATA_R &= (~(1<<0)))
 }
 
-void lcd_data(unsigned char data){
+void LCD_data(unsigned char data){
     // passing 8 bit data
     printdata(data);
     GPIO_PORTD_DATA_R &= ~0x02;//turn off RW
@@ -83,7 +83,7 @@ void lcd_data(unsigned char data){
     GPIO_PORTD_DATA_R &= ~(0x04) // turn off enable
 
 }
-void lcd_cmd(unsigned char cmd){// for instruction 
+void LCD_cmd(unsigned char cmd){// for instruction 
     // passing 8 bit data
     printdata(cmd);
     GPIO_PORTD_DATA_R &= ~0x02;//turn off RW
@@ -93,6 +93,6 @@ void lcd_cmd(unsigned char cmd){// for instruction
     GPIO_PORTD_DATA_R &= ~(0x04) // turn off enable
 
 }
-void lcd_string(unsigned char *str,unsigned char len){
-    
+void LCD_string(unsigned char *str,unsigned char len){
+
 }
