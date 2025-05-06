@@ -34,4 +34,18 @@ char UART0_getChar(){
     return (char) GET_REG(UART0_DR_R);          //if not empty go get data
 }
 
+void UART0_receiveString(char * arr,char stopChar){
+   char character;
+   int i=0;
+
+   while(1){
+     character =UART0_getChar();
+	 if(character == stopChar){
+		break;
+	 }
+	 arr[i++]=character;
+   }
+    arr[i]="\0"; //Null terminates the string
+}
+
 
