@@ -45,7 +45,7 @@ void UART0_receiveString(char * arr,char stopChar){
 	 }
 	 arr[i++]=character;
    }
-    arr[i]="\0"; //Null terminates the string
+    arr[i] = '\0'; //Null terminates the string
 }
 
 
