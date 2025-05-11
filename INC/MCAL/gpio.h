@@ -21,6 +21,8 @@ void GPIO_setLedValue(GPIO_PIN, unsigned char);
 
 unsigned char GPIO_getSwitchValue(GPIO_PIN);
 
+void GPIO_initPortA(void);
+void GPIO_initPortB(void);
 void GPIO_initPortF(void);
 
 #endif

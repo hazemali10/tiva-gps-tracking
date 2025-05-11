@@ -35,3 +35,27 @@ void GPIO_initPortF()
 
     GPIO_PORTF_DATA_R &= ~0x0E;                     // clear data register LEDs
 }
+
+void GPIO_initPortA() {
+    SYSCTL_RCGCGPIO_R |= 0x01;  // Activate clock for Port A
+    while ((SYSCTL_PRGPIO_R & 0x01) == 0);
+    GPIO_PORTA_CR_R |= 0x38;  
+    GPIO_PORTA_AMSEL_R &= ~(0x38);  
+    GPIO_PORTA_PCTL_R &= ~ (0x00FFF000);
+    GPIO_PORTA_DIR_R |= 0x38;  
+    GPIO_PORTA_AFSEL_R &= ~(0x38);
+    GPIO_PORTA_DEN_R |= 0x38;
+    GPIO_PORTA_DATA_R &= ~(0x38);
+}
+
+void GPIO_initPortB() {
+    SYSCTL_RCGCGPIO_R |= 0x02;  // Activate clock for Port B
+    while ((SYSCTL_PRGPIO_R & 0x02) == 0);
+    GPIO_PORTB_CR_R |= 0xFF;
+    GPIO_PORTB_AMSEL_R &= ~(0xFF);
+    GPIO_PORTB_PCTL_R &= ~ (0xFFFFFFFF);
+    GPIO_PORTB_DIR_R |= 0xFF;
+    GPIO_PORTB_AFSEL_R &= ~(0xFF);
+    GPIO_PORTB_DEN_R |= 0xFF;
+    GPIO_PORTB_DATA_R &= ~(0xFF);
+}
