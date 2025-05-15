@@ -12,12 +12,36 @@ void LCD_pulse(void) {
     systick_waitMs(2);
 }
 
+void LCD_data(unsigned char data) {
+    GPIO_PORTA_DATA_R |= 0x08 ;
+    GPIO_PORTB_DATA_R &= ~(0xFF) ;
+	GPIO_PORTB_DATA_R |= data ;
+	LCD_pulse();
+	systick_waitMs(5);
+}
+
 void LCD_cmd(unsigned char cmd) {
     GPIO_PORTA_DATA_R &= ~(0x08) ;
     GPIO_PORTB_DATA_R &= ~(0xFF) ;
 	GPIO_PORTB_DATA_R |= cmd ;
 	LCD_pulse();
 	systick_waitMs(5);
+}
+
+void LCD_string(char *str, LCD_COMMAND cmd) {
+    char i;
+
+    if (cmd == UPPER_LINE) {
+        LCD_cmd(UPPER_LINE);
+    } else if (cmd == LOWER_LINE) {
+        LCD_cmd(LOWER_LINE);
+    }
+
+    while (str[i] != '\0') {
+        LCD_data(str[i]);
+        LCD_cmd(INCREMENT_CURSOR);
+        i++;
+    }
 }
 
 void LCD_init(void) {

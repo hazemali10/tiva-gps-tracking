@@ -11,7 +11,9 @@ typedef enum {
 void delay(long d);
 
 void LCD_pulse(void);
+void LCD_data(unsigned char data);
 void LCD_cmd(unsigned char cmd);
+void LCD_string(char *str, LCD_COMMAND cmd);
 void LCD_init(void);
 
 #endif
