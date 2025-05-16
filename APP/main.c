@@ -91,7 +91,22 @@ int main() {
         minLocationIndex = i;
       }
     }
-    
+
+    if (minDistance < 0.015f) {
+      GPIO_PORTA_DATA_R |= 0x4;
+      GPIO_setLedValue(LED_GREEN, GPIO_LED_ON);
+      GPIO_setLedValue(LED_RED, GPIO_LED_OFF);
+    } 
+    else if (minDistance > 0.015f && minDistance < 0.020f) {
+      GPIO_PORTA_DATA_R &= ~0x4;
+      GPIO_setLedValue(LED_GREEN, GPIO_LED_ON);
+      GPIO_setLedValue(LED_RED, GPIO_LED_ON);
+    } 
+    else  {
+      GPIO_PORTA_DATA_R &= ~0x4;
+      GPIO_setLedValue(LED_GREEN, GPIO_LED_OFF);
+      GPIO_setLedValue(LED_RED, GPIO_LED_ON);
+    }
     
     // sprintf(distanceString, "%.4f", minDistance);
     
