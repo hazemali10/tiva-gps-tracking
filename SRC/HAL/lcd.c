@@ -1,98 +1,59 @@
-#include "lcd.h"
 #include "tm4c123gh6pm.h"
+#include "systick.h"
+#include "gpio.h"
+#include "lcd.h"
 
-void delay(long d);
-void LCD_printData(unsigned char data);
-void LCD_data(unsigned char data);
-void LCD_cmd(unsigned char cmd);
-void LCD_string(unsigned char *str,unsigned char len);
-void LCD_init(void);
-/*
-    RS= PD0
-    RW= PD1
-    EN= PD2
+#include <stdio.h>
+
+void LCD_pulse(void) {
+    GPIO_PORTA_DATA_R |= 0x20 ;
+    systick_waitMs(2);
+    GPIO_PORTA_DATA_R &= ~ (0x20);
+    systick_waitMs(2);
+}
+
+void LCD_data(unsigned char data) {
+    GPIO_PORTA_DATA_R |= 0x08 ;
+    GPIO_PORTB_DATA_R &= ~(0xFF) ;
+	GPIO_PORTB_DATA_R |= data ;
+	LCD_pulse();
+	systick_waitMs(5);
+}
+
+void LCD_cmd(unsigned char cmd) {
+    GPIO_PORTA_DATA_R &= ~(0x08) ;
+    GPIO_PORTB_DATA_R &= ~(0xFF) ;
+	GPIO_PORTB_DATA_R |= cmd ;
+	LCD_pulse();
+	systick_waitMs(5);
+}
+
+void LCD_string(char *str, LCD_COMMAND cmd) {
+    char i;
+
+    if (cmd == UPPER_LINE) {
+        LCD_cmd(UPPER_LINE);
+    } else if (cmd == LOWER_LINE) {
+        LCD_cmd(LOWER_LINE);
+    }
+
+    while (str[i] != '\0') {
+        LCD_data(str[i]);
+        LCD_cmd(INCREMENT_CURSOR);
+        i++;
+    }
+}
+
+void LCD_init(void) {
     
-    D0= PA7
-    D1= PA6
-    D2= PA5
-    D3= PB4
-    D4= PE5
-    D5= PE4
-    D6= PB1
-    D7= PB0
-*/
-
-
-
-
-void LCD_gpioInit(){
-    
-    SYSCTL_RCGCGPIO_R |= 0x1B;
-    while((SYSCTL_PRGPIO_R& 0x01)==0){};
-    GPIO_PORTA_DEN_R |= 0xE0;
-    GPIO_PORTB_DEN_R |= 0x13;
-    GPIO_PORTD_DEN_R |= 0x07;
-    GPIO_PORTE_DEN_R |= 0x30
-    // direction 
-    GPIO_PORTA_DIR_R |= 0xE0;
-    GPIO_PORTB_DIR_R |= 0x13;
-    GPIO_PORTD_DIR_R |= 0x07;
-    GPIO_PORTE_DIR_R |= 0x30;
-
-}
-
-void delay(long d)
-{
-    while (d--){};
-    
-}
-
-void LCD_printData(unsigned char data){
-    if((data&0x01)==0x01)(GPIO_PORTA_DATA_R |= (1<<7) );
-    else (GPIO_PORTA_DATA_R &= (~(1<<7)))
-
-    if((data&0x02)==0x02)(GPIO_PORTA_DATA_R |= (1<<6) );
-    else (GPIO_PORTA_DATA_R &= (~(1<<6)))
-
-    if((data&0x04)==0x04)(GPIO_PORTB_DATA_R |= (1<<5) );
-    else (GPIO_PORTA_DATB_R &= (~(1<<5)))
-    
-    if((data&0x08)==0x08)(GPIO_PORTA_DATA_R |= (1<<4) );
-    else (GPIO_PORTA_DATA_R &= (~(1<<4)))
-
-    if((data&0x10)==0x10)(GPIO_PORTE_DATA_R |= (1<<5) );
-    else (GPIO_PORTE_DATA_R &= (~(1<<5)))
-
-    if((data&0x20)==0x20)(GPIO_PORTE_DATA_R |= (1<<4) );
-    else (GPIO_PORTE_DATA_R &= (~(1<<4)))
-
-    if((data&0x40)==0x40)(GPIO_PORTB_DATA_R |= (1<<1) );
-    else (GPIO_PORTB_DATA_R &= (~(1<<1)))
-
-    if((data&0x80)==0x80)(GPIO_PORTB_DATA_R |= (1<<0) );
-    else (GPIO_PORTB_DATA_R &= (~(1<<0)))
-}
-
-void LCD_data(unsigned char data){
-    // passing 8 bit data
-    printdata(data);
-    GPIO_PORTD_DATA_R &= ~0x02;//turn off RW
-    GPIO_PORTD_DATA_R |= 0x01;//turn on RS
-    GPIO_PORTD_DATA_R |= 0x04 //turn on enable
-    delay(10000);
-    GPIO_PORTD_DATA_R &= ~(0x04) // turn off enable
-
-}
-void LCD_cmd(unsigned char cmd){// for instruction 
-    // passing 8 bit data
-    printdata(cmd);
-    GPIO_PORTD_DATA_R &= ~0x02;//turn off RW
-    GPIO_PORTD_DATA_R &= ~0x01;//turn on RS
-    GPIO_PORTD_DATA_R |= 0x04 //turn on enable
-    delay(10000);
-    GPIO_PORTD_DATA_R &= ~(0x04) // turn off enable
-
-}
-void LCD_string(unsigned char *str,unsigned char len){
-
+    GPIO_initPortA();
+    GPIO_initPortB();
+    LCD_cmd(0x0C);                          // Display On, Cursor Off
+    systick_waitMs(1);
+    LCD_cmd(0x38);                          // 2 lines, 5x7 matrix
+    systick_waitMs(1);  
+    LCD_cmd(CLEAR);                          // Clear display screen
+    systick_waitMs(10);  
+    LCD_cmd(INCREMENT_CURSOR);              // Increment cursor
+    systick_waitMs(1);
 }

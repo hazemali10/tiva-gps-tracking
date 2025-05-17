@@ -39,13 +39,13 @@ void GPIO_initPortF()
 void GPIO_initPortA() {
     SYSCTL_RCGCGPIO_R |= 0x01;  // Activate clock for Port A
     while ((SYSCTL_PRGPIO_R & 0x01) == 0);
-    GPIO_PORTA_CR_R |= 0x38;  
-    GPIO_PORTA_AMSEL_R &= ~(0x38);  
-    GPIO_PORTA_PCTL_R &= ~ (0x00FFF000);
-    GPIO_PORTA_DIR_R |= 0x38;  
-    GPIO_PORTA_AFSEL_R &= ~(0x38);
-    GPIO_PORTA_DEN_R |= 0x38;
-    GPIO_PORTA_DATA_R &= ~(0x38);
+    GPIO_PORTA_CR_R |= 0x3C;  
+    GPIO_PORTA_AMSEL_R &= ~(0x3C);  
+    GPIO_PORTA_PCTL_R &= ~ (0x00FFFF00);
+    GPIO_PORTA_DIR_R |= 0x3C;  
+    GPIO_PORTA_AFSEL_R &= ~(0x3C);
+    GPIO_PORTA_DEN_R |= 0x3C;
+    GPIO_PORTA_DATA_R &= ~(0x3C);
 }
 
 void GPIO_initPortB() {
