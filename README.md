@@ -57,3 +57,14 @@
    ```bash
    git clone https://github.com/your‑username/gps-campus-navigator.git
    cd gps-campus-navigator
+2. **Open in Keil µVision**
+
+ • Launch TM4C123_Project.uvprojx
+
+3. **Configure targets**
+
+ • Select TM4C123GH6PM
+
+4. **Build & flash**
+
+• Click Build ▶ then Download ▶ to program your Tiva board.
