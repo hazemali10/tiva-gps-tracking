@@ -19,8 +19,6 @@
   Shows your current coordinates and the name/distance of the closest location.
 - **Modular C & ARM codebase**  
   Clear separation of GPS, display, and navigation logic.
-- **Low‐power friendly**  
-  Utilizes sleep modes when idle to minimize power use.
 
 ---
 
@@ -29,11 +27,6 @@
 - **Microcontroller**: TI Tiva C Series TM4C123GH6PM  
 - **GPS Module**: e.g. u‑blox NEO‑6M (UART interface)  
 - **LCD Display**: 16×2 Character LCD (HD44780‑compatible)  
-- **Wiring**:  
-  - GPS TX → UART1 RX (PD2)  
-  - GPS RX → UART1 TX (PD3)  
-  - LCD data pins → GPIO Port B (PB0–PB7)  
-  - LCD RS/E/RW → GPIO Port A (PA6, PA7, PA5)  
 - **Power**: 3.3 V regulated supply
 
 ---
@@ -41,7 +34,7 @@
 ## 💻 Software
 
 - **Languages**: C (Keil MDK), ARM Assembly  
-- **IDE**: Keil µVision5 , VSCODE 
+- **IDE**: Keil µVision5 , VS CODE 
 - **Compiler**: ARMCC  
 - **Libraries**:  
   - TivaWare™ (GPIO, UART, SysTick)  
