@@ -36,14 +36,12 @@
   - LCD RS/E/RW → GPIO Port A (PA6, PA7, PA5)  
 - **Power**: 3.3 V regulated supply
 
-> _See [`hardware/`](./hardware/) for detailed schematics & wiring diagrams._
-
 ---
 
 ## 💻 Software
 
 - **Languages**: C (Keil MDK), ARM Assembly  
-- **IDE**: Keil µVision5  
+- **IDE**: Keil µVision5 , VSCODE 
 - **Compiler**: ARMCC  
 - **Libraries**:  
   - TivaWare™ (GPIO, UART, SysTick)  
